@@ -105,6 +105,21 @@ img {
     align-items: center;
     gap: 10px;
 }
+
+.btn-block button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+}
+
+#btn_prev {
+    background-image: url(../img/back.svg);
+}
+
+#btn_next {
+    background-image: url(../img/next.svg);
+}
 /* pagination */
 
 
