@@ -1,5 +1,20 @@
 @import url(./reset.css);
 
+* {
+    font-family: 'Roboto', sans-serif;
+    color: lightslategray;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(234, 230, 230);
+}
+
+.container {
+    width: 90%;
+}
+
 .lds-ring.show {
     display: inline-block;
 }
@@ -53,13 +68,43 @@ li {
     padding: 10px;
     margin-bottom: 20px;
     gap: 10px;
-    background-color: lightsteelblue
+    background-color: #fff;
+    font-size: 12px;
+    cursor: pointer;
 }
 
-.users-container {
-    padding: 20px;
+#listingTable {
+   padding: 0;
+   min-height: 500px;
 }
 
 img {
     border-radius: 50%;
 }
+
+.load-section {
+    position: relative;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.user-name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.btn-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/* pagination */
+
+

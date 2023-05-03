@@ -8,24 +8,31 @@
     <link rel="stylesheet" href="./style/style.css">
 </head>
 <body>
-    <div class="users">
-        <ol class="users-container">
-
-        </ol>
-    
-    </div>
-    
-    <div style="display:flex; align-items: center; gap: 20px">
-        <!-- <button id="loadMore" onclick="loadMore()">load more</button> -->
-        <button id="loadMore" onclick="loadMore()">load more</button>
-        <div class="lds-ring spinner">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+    <div class="container">
+        <h3>Appointments</h3>
+        <div class="users">
+            
+        </div>
+        <div class="load-section">
+            <ol id="listingTable">
+            </ol>
+            <!-- <button id="loadMore" onclick="loadMore()">load more</button> -->
+            <div class="lds-ring spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+        </div>
+        <div class="btn-block">
+            <button onclick="prevPage()" id="btn_prev">Prev</button>
+                <span>page: </span> <span id="page"></span>
+            <button onclick="nextPage()" id="btn_next">Next</button>
         </div>
     </div>
-    
     <script src="./script/script.js"></script>
+    <script src="./script/pagination.js"></script>
+   
 </body>
 </html>
