@@ -1,11 +1,10 @@
-let changeCount = localStorage.getItem('changeCount')
-let dataUser = localStorage.getItem('dataUser')
-
+let changeCount = localStorage.getItem('changeCount');
+let dataUser = localStorage.getItem('dataUser');
 
 async function loadUser() {
   const response = await fetch('https://randomuser.me/api/');
   const data = await response.json();
-  localStorage.setItem('dataUser', data)
+  localStorage.setItem('dataUser', data);
   return data.results[0];
 }
 
@@ -28,24 +27,4 @@ async function loadMore() {
     })
     .forEach((user) => usersContainer.append(user));
   spinner.classList.remove('show');
-}
-
-const select = document.querySelector('#select-value');
-
-function myFunction(chosen) {
-  // console.log(chosen);
-  let listing_table = document.querySelector('#listingTable');
-    if (chosen === '5') {
-    records_per_page = 1
-    listing_table.style.minHeight = "500px"
-    changePage(page)
-    localStorage.setItem('changeCount', records_per_page)
-  }
-  if (chosen === '10') {
-    records_per_page = 2
-    listing_table.style.minHeight = "900px"
-    changePage(page)
-    localStorage.setItem('changeCount',  records_per_page)
-  }
-
 }

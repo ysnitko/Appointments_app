@@ -26,22 +26,24 @@
         </div>
         <div class="btn-block">
             <div class="pagination">
-                 
+                <button id="first-page" onclick=""></button>
                 <button onclick="prevPage()" id="btn_prev"></button>
                 <span id="page"></span><span>of 10 pages</span>
             <button onclick="nextPage()" id="btn_next"></button>
             </div>
-            <div>
+            <div class="rows-count">
                 <span>Show:</span>
-                <select name="show-items-count" id="select-value" onChange="myFunction(this.options[this.selectedIndex].value)">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
+                <select name="show-items-count" id="select-value" onChange="ChooseRowsCount(this.options[this.selectedIndex].value)">
+                    <option value="5">5 rows</option>
+                    <option value="10">10 rows</option>
                 </select>
             </div>
         </div>
     </div>
     <script src="./script/script.js"></script>
     <script src="./script/pagination.js"></script>
+    
+    
    
 </body>
 </html>

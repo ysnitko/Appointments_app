@@ -104,6 +104,13 @@ img {
 
 }
 
+.rows-count {
+    background: none
+}
+
+#page  {
+    color: green;
+}
 .phone {
     text-align: right;
 }
@@ -124,10 +131,12 @@ img {
 
 #btn_prev {
     background-image: url(../img/back.svg);
+    background-color: transparent;
 }
 
 #btn_next {
     background-image: url(../img/next.svg);
+    background-color: transparent;
 }
 
 .btn-block {
@@ -136,8 +145,18 @@ img {
     justify-content: space-around;
 }
 
-.show-items-count {
-    color: #fff;
+#select-value {
+    border: none;
+    background: none;
+    outline: none;
+}
+
+#first-page {
+    border: 2px solid lightslategray;
+    background-color: transparent;
+    background-image: url(../img/first.svg);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 /* pagination */
 
