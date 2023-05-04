@@ -16,7 +16,6 @@
         <div class="load-section">
             <ol id="listingTable">
             </ol>
-            <!-- <button id="loadMore" onclick="loadMore()">load more</button> -->
             <div class="lds-ring spinner">
                 <div></div>
                 <div></div>
@@ -26,9 +25,19 @@
             
         </div>
         <div class="btn-block">
-            <button onclick="prevPage()" id="btn_prev"></button>
-                <span>page:</span> <span id="page"></span>
+            <div class="pagination">
+                 
+                <button onclick="prevPage()" id="btn_prev"></button>
+                <span id="page"></span><span>of 10 pages</span>
             <button onclick="nextPage()" id="btn_next"></button>
+            </div>
+            <div>
+                <span>Show:</span>
+                <select name="show-items-count" id="select-value" onChange="myFunction(this.options[this.selectedIndex].value)">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
         </div>
     </div>
     <script src="./script/script.js"></script>
