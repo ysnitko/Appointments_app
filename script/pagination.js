@@ -1,14 +1,9 @@
-let page = localStorage.getItem('pages')
-  ? JSON.parse(localStorage.getItem('pages'))
-  : 1;
-let records_per_page = localStorage.getItem('changeCount')
-  ? parseInt(localStorage.getItem('changeCount'))
-  : 1;
-
-let pages = restore();
-console.log(pages);
-let listing_table = document.querySelector('#listingTable');
-changePage(pages);
+let page = restore() || 1;
+let recordsOnPage = restoreRows() || 1;
+console.log(page);
+const listingTable = document.querySelector('#listingTable');
+const select = document.querySelector('#select-value');
+changePage(page);
 
 function prevPage() {
   if (page > 1) {
@@ -21,69 +16,54 @@ function prevPage() {
 function nextPage() {
   if (page < 10) {
     page++;
-    console.log(page);
     changePage(page);
     store();
-
-    // localStorage.setItem('pages',  page)
   }
 }
 
-async function changePage(page) {
-  let btn_next = document.querySelector('#btn_next');
-  let btn_prev = document.querySelector('#btn_prev');
-  let page_span = document.querySelector('#page');
-  let firstPage = document.querySelector('#first-page');
-
-  // Validate page
+function changePage(page) {
+  let pageSpan = document.querySelector('#page');
   if (page < 1) page = 1;
   if (page > 10) page = 10;
-
-  listing_table.innerHTML = '';
-
-  for (
-    let i = (page - 1) * records_per_page;
-    i < page * records_per_page;
-    i++
-  ) {
+  listingTable.innerHTML = '';
+  for (let i = (page - 1) * recordsOnPage; i < page * recordsOnPage; i++) {
     loadMore();
   }
+  pageSpan.innerHTML = page;
+  btnControl();
+}
 
-  page_span.innerHTML = page;
-
+function btnControl() {
+  let btnNext = document.querySelector('#btn_next');
+  let btnPrev = document.querySelector('#btn_prev');
+  let firstPage = document.querySelector('#first-page');
   if (page == 1) {
-    btn_prev.style.visibility = 'hidden';
-    firstPage.style.visibility = 'hidden';
+    btnPrev.classList.add('hidden');
+    firstPage.classList.add('hidden');
   } else {
-    btn_prev.style.visibility = 'visible';
-    firstPage.style.visibility = 'visible';
+    btnPrev.classList.remove('hidden');
+    firstPage.classList.remove('hidden');
   }
 
   if (page == 10) {
-    btn_next.style.visibility = 'hidden';
+    btnNext.classList.add('hidden');
   } else {
-    btn_next.style.visibility = 'visible';
+    btnNext.classList.remove('hidden');
   }
 }
 
-// window.onload = function () {
-//   changePage(pages);
-//   console.log(pages);
-// };
-
-function ChooseRowsCount(chosen) {
-  let listing_table = document.querySelector('#listingTable');
-  if (chosen === '5') {
-    records_per_page = 1;
-    listing_table.style.minHeight = '500px';
+function ChooseRowsCount() {
+  if (select.value === '5') {
+    recordsOnPage = 1;
+    listingTable.style.minHeight = '500px';
     changePage(page);
-    localStorage.setItem('changeCount', records_per_page);
+    storeRows();
   }
-  if (chosen === '10') {
-    records_per_page = 2;
-    listing_table.style.minHeight = '900px';
+  if (select.value === '10') {
+    recordsOnPage = 2;
+    listingTable.style.minHeight = '900px';
     changePage(page);
-    localStorage.setItem('changeCount', records_per_page);
+    storeRows();
   }
 }
 
@@ -93,4 +73,12 @@ function store() {
 
 function restore() {
   return JSON.parse(localStorage.getItem('pages'));
+}
+
+function storeRows() {
+  localStorage.setItem('rows', JSON.stringify(recordsOnPage));
+}
+
+function restoreRows() {
+  return JSON.parse(localStorage.getItem('rows'));
 }

@@ -1,10 +1,8 @@
-let changeCount = localStorage.getItem('changeCount');
-let dataUser = localStorage.getItem('dataUser');
+let storedUserList = JSON.parse(localStorage.getItem('userList'));
 
 async function loadUser() {
   const response = await fetch('https://randomuser.me/api/');
   const data = await response.json();
-  localStorage.setItem('dataUser', data);
   return data.results[0];
 }
 
@@ -13,7 +11,9 @@ async function loadMore() {
   const usersContainer = document.querySelector('#listingTable');
   spinner.classList.add('show');
   const promises = [loadUser(), loadUser(), loadUser(), loadUser(), loadUser()];
-  const userList = await Promise.all(promises);
+
+  let userList = await Promise.all(promises);
+  localStorage.setItem('userList', JSON.stringify(userList));
   userList
     .map((user) => {
       const li = document.createElement('li');
