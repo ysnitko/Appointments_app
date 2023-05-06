@@ -2,12 +2,12 @@ let page = (restore() && restore().page) || 1;
 let elements = (restore() && restore().rows) || 5;
 const listingTable = document.querySelector('#listingTable');
 const select = document.querySelector('#select-value');
-currentPage(page, elements);
+selectedPage(page, elements);
 
 function prevPage() {
   if (page > 1) {
     page--;
-    currentPage(page, elements);
+    selectedPage(page, elements);
     store();
   }
 }
@@ -15,7 +15,7 @@ function prevPage() {
 function nextPage() {
   if (page < 10) {
     page++;
-    currentPage(page, elements);
+    selectedPage(page, elements);
     store();
   }
 }
@@ -23,10 +23,10 @@ function nextPage() {
 function goToFirst() {
   page = 1;
   store();
-  currentPage(page, elements);
+  selectedPage(page, elements);
 }
 
-function currentPage(page, elements) {
+function selectedPage(page, elements) {
   const pageSpan = document.querySelector('#page');
   select.selectedIndex = (restore() && restore().selected) || 0;
   store();
@@ -64,13 +64,13 @@ function ChooseRowsCount() {
     elements = 5;
     select.selectedIndex = 0;
     store();
-    currentPage(page, elements);
+    selectedPage(page, elements);
   }
   if (select.value === '2') {
     elements = 10;
     select.selectedIndex = 1;
     store();
-    currentPage(page, elements);
+    selectedPage(page, elements);
   }
 }
 
