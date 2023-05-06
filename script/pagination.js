@@ -1,14 +1,14 @@
-let page = restore() || 1;
-let recordsOnPage = restoreRows() || 1;
+let page = (restore() && restore().page) || 1;
 console.log(page);
+let elements = (restore() && restore().rows) || 5;
 const listingTable = document.querySelector('#listingTable');
 const select = document.querySelector('#select-value');
-changePage(page);
+changePage(page, elements);
 
 function prevPage() {
   if (page > 1) {
     page--;
-    changePage(page);
+    changePage(page, elements);
     store();
   }
 }
@@ -16,18 +16,26 @@ function prevPage() {
 function nextPage() {
   if (page < 10) {
     page++;
-    changePage(page);
+    changePage(page, elements);
     store();
   }
 }
 
-function changePage(page) {
-  let pageSpan = document.querySelector('#page');
+function goToFirst() {
+  page = 1;
+  store();
+  changePage(page, elements);
+}
+
+function changePage(page, elements) {
+  const pageSpan = document.querySelector('#page');
+  select.selectedIndex = (restore() && restore().selected) || 0;
+  store();
   if (page < 1) page = 1;
   if (page > 10) page = 10;
   listingTable.innerHTML = '';
-  for (let i = (page - 1) * recordsOnPage; i < page * recordsOnPage; i++) {
-    loadMore();
+  for (let index = page - 1; index < page; index++) {
+    loadMore(elements);
   }
   pageSpan.innerHTML = page;
   btnControl();
@@ -53,32 +61,32 @@ function btnControl() {
 }
 
 function ChooseRowsCount() {
-  if (select.value === '5') {
-    recordsOnPage = 1;
-    listingTable.style.minHeight = '500px';
-    changePage(page);
-    storeRows();
+  if (select.value === '1') {
+    elements = 5;
+    select.selectedIndex = 0;
+    console.log(select.selected);
+    store();
+    changePage(page, elements);
   }
-  if (select.value === '10') {
-    recordsOnPage = 2;
-    listingTable.style.minHeight = '900px';
-    changePage(page);
-    storeRows();
+  if (select.value === '2') {
+    elements = 10;
+    select.selectedIndex = 1;
+    store();
+    changePage(page, elements);
   }
 }
 
 function store() {
-  localStorage.setItem('pages', JSON.stringify(page));
+  localStorage.setItem(
+    'pages',
+    JSON.stringify({
+      page: page,
+      rows: elements,
+      selected: select.selectedIndex,
+    })
+  );
 }
 
 function restore() {
   return JSON.parse(localStorage.getItem('pages'));
-}
-
-function storeRows() {
-  localStorage.setItem('rows', JSON.stringify(recordsOnPage));
-}
-
-function restoreRows() {
-  return JSON.parse(localStorage.getItem('rows'));
 }
