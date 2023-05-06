@@ -1,38 +1,92 @@
-async function loadUser() {
-  const response = await fetch('https://randomuser.me/api/');
-  const data = await response.json();
-  return data.results[0];
+let page = (restore() && restore().page) || 1;
+console.log(page);
+let elements = (restore() && restore().rows) || 5;
+const listingTable = document.querySelector('#listingTable');
+const select = document.querySelector('#select-value');
+changePage(page, elements);
+
+function prevPage() {
+  if (page > 1) {
+    page--;
+    changePage(page, elements);
+    store();
+  }
 }
 
-async function loadMore(elements) {
-  const spinner = document.querySelector('.spinner');
-  const usersContainer = document.querySelector('#listingTable');
-  spinner.classList.add('show');
-  const indexes = Array.from({ length: elements }, (_, i) => i);
-  const promises = indexes.map(() => loadUser());
-  // console.log(promises);
-  let userList = await Promise.all(promises);
-  userList
-    .map((user) => {
-      const li = document.createElement('li');
-      html = `<div class="user-name"><img src="${user.picture.thumbnail}" alt=""><span> ${user.name.title} ${user.name.first} ${user.name.last}</span></div>
-      <div class="age">${user.dob.age}</div>
-      <div class="email">${user.email}</div>
-      <div class="address">${user.location.country} ${user.location.state} ${user.location.city} ${user.location.street.name} ${user.location.street.number}</div>
-      <div class="phone">${user.phone}</div>`;
-      li.innerHTML = html;
-      return li;
+function nextPage() {
+  if (page < 10) {
+    page++;
+    changePage(page, elements);
+    store();
+  }
+}
+
+function goToFirst() {
+  page = 1;
+  store();
+  changePage(page, elements);
+}
+
+function changePage(page, elements) {
+  const pageSpan = document.querySelector('#page');
+  select.selectedIndex = (restore() && restore().selected) || 0;
+  store();
+  if (page < 1) page = 1;
+  if (page > 10) page = 10;
+  listingTable.innerHTML = '';
+  for (let index = page - 1; index < page; index++) {
+    loadMore(elements);
+  }
+  pageSpan.innerHTML = page;
+  btnControl();
+}
+
+function btnControl() {
+  let btnNext = document.querySelector('#btn_next');
+  let btnPrev = document.querySelector('#btn_prev');
+  let firstPage = document.querySelector('#first-page');
+  if (page == 1) {
+    btnPrev.classList.add('hidden');
+    firstPage.classList.add('hidden');
+  } else {
+    btnPrev.classList.remove('hidden');
+    firstPage.classList.remove('hidden');
+  }
+
+  if (page == 10) {
+    btnNext.classList.add('hidden');
+  } else {
+    btnNext.classList.remove('hidden');
+  }
+}
+
+function ChooseRowsCount() {
+  if (select.value === '1') {
+    elements = 5;
+    select.selectedIndex = 0;
+    console.log(select.selected);
+    store();
+    changePage(page, elements);
+  }
+  if (select.value === '2') {
+    elements = 10;
+    select.selectedIndex = 1;
+    store();
+    changePage(page, elements);
+  }
+}
+
+function store() {
+  localStorage.setItem(
+    'pages',
+    JSON.stringify({
+      page: page,
+      rows: elements,
+      selected: select.selectedIndex,
     })
-    .forEach((user) => usersContainer.appendChild(user));
-  spinner.classList.remove('show');
-  document.querySelector('#first-page').scrollIntoView();
+  );
 }
 
-// function storeUser() {
-//   localStorage.setItem('userList', JSON.stringify(userList));
-// }
-
-// function restoreUsers() {
-//   return JSON.parse(localStorage.getItem('userList'));
-
-// }
+function restore() {
+  return JSON.parse(localStorage.getItem('pages'));
+}
