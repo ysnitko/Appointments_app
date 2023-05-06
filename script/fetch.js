@@ -1,16 +1,15 @@
-async function loadUser() {
+async function loadUsers() {
   const response = await fetch('https://randomuser.me/api/');
   const data = await response.json();
   return data.results[0];
 }
 
-async function loadMore(elements) {
+async function renderList(elements) {
   const spinner = document.querySelector('.spinner');
   const usersContainer = document.querySelector('#listingTable');
   spinner.classList.add('show');
   const indexes = Array.from({ length: elements }, (_, i) => i);
-  const promises = indexes.map(() => loadUser());
-  // console.log(promises);
+  const promises = indexes.map(() => loadUsers());
   let userList = await Promise.all(promises);
   userList
     .map((user) => {
@@ -27,12 +26,3 @@ async function loadMore(elements) {
   spinner.classList.remove('show');
   document.querySelector('#first-page').scrollIntoView();
 }
-
-// function storeUser() {
-//   localStorage.setItem('userList', JSON.stringify(userList));
-// }
-
-// function restoreUsers() {
-//   return JSON.parse(localStorage.getItem('userList'));
-
-// }

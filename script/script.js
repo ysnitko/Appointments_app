@@ -1,14 +1,13 @@
 let page = (restore() && restore().page) || 1;
-console.log(page);
 let elements = (restore() && restore().rows) || 5;
 const listingTable = document.querySelector('#listingTable');
 const select = document.querySelector('#select-value');
-changePage(page, elements);
+currentPage(page, elements);
 
 function prevPage() {
   if (page > 1) {
     page--;
-    changePage(page, elements);
+    currentPage(page, elements);
     store();
   }
 }
@@ -16,7 +15,7 @@ function prevPage() {
 function nextPage() {
   if (page < 10) {
     page++;
-    changePage(page, elements);
+    currentPage(page, elements);
     store();
   }
 }
@@ -24,10 +23,10 @@ function nextPage() {
 function goToFirst() {
   page = 1;
   store();
-  changePage(page, elements);
+  currentPage(page, elements);
 }
 
-function changePage(page, elements) {
+function currentPage(page, elements) {
   const pageSpan = document.querySelector('#page');
   select.selectedIndex = (restore() && restore().selected) || 0;
   store();
@@ -35,13 +34,13 @@ function changePage(page, elements) {
   if (page > 10) page = 10;
   listingTable.innerHTML = '';
   for (let index = page - 1; index < page; index++) {
-    loadMore(elements);
+    renderList(elements);
   }
   pageSpan.innerHTML = page;
-  btnControl();
+  btnControls();
 }
 
-function btnControl() {
+function btnControls() {
   let btnNext = document.querySelector('#btn_next');
   let btnPrev = document.querySelector('#btn_prev');
   let firstPage = document.querySelector('#first-page');
@@ -64,15 +63,14 @@ function ChooseRowsCount() {
   if (select.value === '1') {
     elements = 5;
     select.selectedIndex = 0;
-    console.log(select.selected);
     store();
-    changePage(page, elements);
+    currentPage(page, elements);
   }
   if (select.value === '2') {
     elements = 10;
     select.selectedIndex = 1;
     store();
-    changePage(page, elements);
+    currentPage(page, elements);
   }
 }
 
