@@ -44,7 +44,7 @@ function btnControls() {
   let btnNext = document.querySelector('#btn_next');
   let btnPrev = document.querySelector('#btn_prev');
   let firstPage = document.querySelector('#first-page');
-  if (page == 1) {
+  if (page === 1) {
     btnPrev.classList.add('hidden');
     firstPage.classList.add('hidden');
   } else {
@@ -52,7 +52,7 @@ function btnControls() {
     firstPage.classList.remove('hidden');
   }
 
-  if (page == 10) {
+  if (page === 10) {
     btnNext.classList.add('hidden');
   } else {
     btnNext.classList.remove('hidden');
