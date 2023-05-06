@@ -33,9 +33,7 @@ function selectedPage(page, elements) {
   if (page < 1) page = 1;
   if (page > 10) page = 10;
   listingTable.innerHTML = '';
-  for (let index = page - 1; index < page; index++) {
-    renderList(elements);
-  }
+  renderList(elements);
   pageSpan.innerHTML = page;
   btnControls();
 }
